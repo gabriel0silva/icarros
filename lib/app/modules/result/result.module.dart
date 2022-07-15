@@ -7,7 +7,7 @@ class ResultModule extends Module {
 
   @override
   List<ModularRoute> get routes => [
-    ChildRoute('/', child: (context, args) => ResultPage(brandId: '', modelId: '', yearId: '',))
+    ChildRoute('/', child: (context, args) => const ResultPage(brandId: '', modelId: '', yearId: '',))
   ];
 
   

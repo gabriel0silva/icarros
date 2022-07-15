@@ -15,32 +15,5 @@ Future<void> main() async {
     module: AppModule(),
     child: const AppWidget(),
   ));
-
-  
 }
 
-
-
-/*
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-       debugShowCheckedModeBanner: false,
-       title: 'Icarros',
-       initialRoute: 
-        '/', 
-        routes: {
-          '/' : (_) => const SplashPage(),
-          '/login' : (_) => LoginPage(),
-          '/home' : (_) => HomePage()
-          
-
-        }
-    );
-  }
-}
-*/

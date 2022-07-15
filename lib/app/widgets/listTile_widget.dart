@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 
 class ListTileWidget extends StatelessWidget {
@@ -14,7 +16,7 @@ class ListTileWidget extends StatelessWidget {
       child: ListTile(
         title: Text(
           title,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.black,
             fontSize: 28,
             fontWeight: FontWeight.w500,
@@ -22,7 +24,7 @@ class ListTileWidget extends StatelessWidget {
         ),
         subtitle: Text(
           subtitle,
-          style: TextStyle(
+          style: const TextStyle(
             color: Color(0xFF747272),
             fontSize: 18,
           ),

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:icarros/app/modules/result/result_page.dart';
+import 'package:icarros/app/widgets/custom_progress_widget.dart';
 
 import '../../controllers/Marcas_controller.dart';
 import '../../models/cars_model.dart';
-import '../../widgets/dropdown_widget.dart';
 
 class HomePageTwo extends StatefulWidget {
   final String brandId;
@@ -42,7 +43,8 @@ class _HomePageTwoState extends State<HomePageTwo> {
    @override
    Widget build(BuildContext context) {
        return Scaffold(
-      body: Stack(
+      body: ano.isNotEmpty
+      ? Stack(
         children: <Widget>[
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
@@ -74,7 +76,7 @@ class _HomePageTwoState extends State<HomePageTwo> {
                     ),
                     // DropdownButton(items: list.map((item)), )
 
-                    Container(
+                    SizedBox(
                       height: 60,
                       child: Padding(
                           padding: const EdgeInsets.only(right: 60, left: 60),
@@ -91,8 +93,7 @@ class _HomePageTwoState extends State<HomePageTwo> {
                                   borderRadius:
                                       BorderRadius.circular(30)),
                                         
-                                        child: ano.isNotEmpty
-                                          ?DropdownButton(
+                                        child: DropdownButton(
                                           value: yearId, // brandId, modelId ou yearId
                                           onChanged: (String? newValue) {
                                             
@@ -122,7 +123,6 @@ class _HomePageTwoState extends State<HomePageTwo> {
                                                 child: Text(value.name.toString()));
                                           }).toList(),
                                         )
-                                        : CircularProgressIndicator()
                             ),
                           )),
                     ),
@@ -132,7 +132,9 @@ class _HomePageTwoState extends State<HomePageTwo> {
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             primary: const Color(0xFF000000)),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/home');
+                        },
                         child: const Icon(Icons.arrow_back_rounded)
                       ),
                     ),
@@ -142,7 +144,8 @@ class _HomePageTwoState extends State<HomePageTwo> {
             ],
           )
         ],
-      ),
+      )
+      : const CustomProgressWidget()
     );
   }
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:icarros/app/styles/i_carros_icons.dart';
+import 'package:icarros/app/widgets/custom_progress_widget.dart';
 import 'package:icarros/app/widgets/listTile_widget.dart';
 
 import '../../controllers/Marcas_controller.dart';
@@ -12,7 +14,7 @@ class ResultPage extends StatefulWidget {
   final String modelId;
   final String yearId;
 
-  ResultPage(
+  const ResultPage(
       {Key? key,
       required this.brandId,
       required this.modelId,
@@ -45,8 +47,6 @@ class _ResultPageState extends State<ResultPage> {
   late String modelId;
   late String yearId;
 
-  
-
   @override
   Widget build(BuildContext context) {
     final screnSize = MediaQuery.of(context).size;
@@ -63,16 +63,16 @@ class _ResultPageState extends State<ResultPage> {
                           color: Colors.black,
                         ),
                         child: Padding(
-                          padding:
-                              const EdgeInsets.fromLTRB(15, 17, 15, 0),
+                          padding: const EdgeInsets.fromLTRB(15, 17, 15, 0),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               IconButton(
-                                  onPressed: () {},
-                                  
+                                  onPressed: () {
+                                    Navigator.pushNamed(context, '/home');
+                                  },
                                   icon: const Icon(
                                     Icons.arrow_back_rounded,
                                     size: 32,
@@ -80,31 +80,18 @@ class _ResultPageState extends State<ResultPage> {
                                   )),
                               Text(
                                 car!.model,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 43,
                                 ),
                               ),
                               Row(
                                 children: [
-                                  IconButton(
-                                      onPressed: () {},
-                                      
-                                      icon: const Icon(
-                                        ICarrosIcons.heart_empty,
-                                        size: 32,
-                                        color: Colors.white
-                                      )),
-                                  const Text(
-                                    '|',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
                                   TextButton.icon(
                                     onPressed: () async {
-                                      final Uri url = Uri.parse('https://sp.olx.com.br/?q=${car!.model}');  
-                                      // String url = 'https://www.google.com/search?q=${car!.model}';
-                                      // await launch(url, forceWebView: false);
-                                      await launchUrl(url);
+                                      String url =
+                                          'https://www.google.com/search?q=${car!.model}';
+                                      await launch(url, forceWebView: false);
                                     },
                                     icon: const Icon(
                                       ICarrosIcons.export_icon,
@@ -114,11 +101,8 @@ class _ResultPageState extends State<ResultPage> {
                                     label: const Text(
                                       'Ver Ofertas',
                                       style: TextStyle(
-                                        fontSize: 23,
-                                        color: Colors.white
-                                      ),
+                                          fontSize: 23, color: Colors.white),
                                     ),
-                                    
                                   )
                                 ],
                               ),
@@ -126,9 +110,8 @@ class _ResultPageState extends State<ResultPage> {
                           ),
                         ),
                       ),
-                      // {"Valor":"R$ 127.451,00","Marca":"VW - VolksWagen","Modelo":"AMAROK High.CD 2.0 16V TDI 4x4 Dies. Aut","AnoModelo":2014,"Combustivel":"Diesel","CodigoFipe":"005340-6","MesReferencia":"julho de 2022 ","TipoVeiculo":1,"SiglaCombustivel":"D"}
                       Padding(
-                        padding: const EdgeInsets.only(top: 15, bottom: 15),
+                        padding: const EdgeInsets.only(top: 15, bottom: 30),
                         child: Column(
                           children: [
                             Column(children: [
@@ -161,7 +144,7 @@ class _ResultPageState extends State<ResultPage> {
                         height: 52,
                         child: ElevatedButton(
                           onPressed: () {
-                            
+                            Navigator.pushNamed(context, '/home');
                           },
                           style: ElevatedButton.styleFrom(
                             primary: const Color(0xFF000000),
@@ -174,17 +157,10 @@ class _ResultPageState extends State<ResultPage> {
                           ),
                         ),
                       ),
-                      Text('Deixe uma susgestão'),
                     ],
                   )
                 ],
               )
-            : CircularProgressIndicator());
-
-            
+            : const CustomProgressWidget());
   }
-  
-  
 }
-
-

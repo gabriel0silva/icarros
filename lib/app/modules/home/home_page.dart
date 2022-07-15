@@ -1,16 +1,12 @@
-import 'dart:developer';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-
 import 'package:icarros/app/controllers/Marcas_controller.dart';
-import 'package:icarros/app/models/Marcas_model.dart';
 import 'package:icarros/app/models/cars_model.dart';
 import 'package:icarros/app/modules/home_one/home_page_one.dart';
-import 'package:icarros/app/modules/login/controller/login_controller.dart';
-import 'package:icarros/app/modules/result/result_page.dart';
-import 'package:icarros/app/modules/splash/splash_page.dart';
-import 'package:icarros/app/widgets/dropdown_widget.dart';
+
+import 'package:icarros/app/widgets/custom_progress_widget.dart';
+
 
 import '../../services/auth/auth_service.dart';
 
@@ -23,25 +19,11 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late List<Cars> marcas = [];
-  late List<Cars> modelos = [];
-  late List<Cars> ano = [];
 
   void _getMarcas() async {
     marcas = await CarsController().getBrands();
     setState(() {});
   }
-
-  void _getModelos(String brandId) async {
-    modelos = await CarsController().getModelos(brandId);
-    setState(() {});
-  }
-
-  void _getAno(String brandId, String modelId) async {
-    ano = await CarsController().getAno(brandId, modelId);
-    setState(() {});
-  }
-
- 
 
   @override
   void initState() {
@@ -50,13 +32,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   String? brandId;
-  late String modelId;
-  late String yearId;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
+      body: marcas.isNotEmpty
+        ? Stack(
         children: <Widget>[
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
@@ -88,7 +69,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     // DropdownButton(items: list.map((item)), )
 
-                    Container(
+                     SizedBox(
                       height: 60,
                       child: Padding(
                           padding: const EdgeInsets.only(right: 60, left: 60),
@@ -105,8 +86,7 @@ class _HomePageState extends State<HomePage> {
                                   borderRadius:
                                       BorderRadius.circular(30)),
                                         
-                                        child: marcas.isNotEmpty
-                                          ?DropdownButton(
+                                        child: DropdownButton(
                                           value: brandId, // brandId, modelId ou yearId
                                           onChanged: (String? newValue) {
                                             
@@ -137,7 +117,7 @@ class _HomePageState extends State<HomePage> {
                                           }).toList(),
                                         )
                                         
-                                        : CircularProgressIndicator()
+                                        
                             ),
                           )),
                     ),
@@ -148,7 +128,10 @@ class _HomePageState extends State<HomePage> {
                         style: ElevatedButton.styleFrom(
                             primary: const Color(0xFF000000)),
                         onPressed: () {
-                           Modular.get<AuthService>().signOut();
+                          
+                          Modular.get<AuthService>().signOut();
+                            
+                           
                         },
                         child: const Text(
                           'Sair',
@@ -164,7 +147,8 @@ class _HomePageState extends State<HomePage> {
             ],
           )
         ],
-      ),
+      )
+      : const CustomProgressWidget()
     );
   }
 }

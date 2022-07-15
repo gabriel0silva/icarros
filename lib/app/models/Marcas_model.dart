@@ -1,4 +1,3 @@
-
 class Marcas {
   String? nome;
   String? codigo;
@@ -11,9 +10,9 @@ class Marcas {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['nome'] = this.nome;
-    data['codigo'] = this.codigo;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['nome'] = nome;
+    data['codigo'] = codigo;
     return data;
   }
   }
